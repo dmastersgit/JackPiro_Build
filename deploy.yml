@@ -1,0 +1,39 @@
+---
+- name: Playbook to Download and Deploy Artifact in tomcat
+  hosts: "{{ deploy_host }}"    
+  tasks:
+  - name: Create a Directory /opt/Downloads
+    become: yes
+    file:
+      path: /opt/Downloads
+      state: directory
+      mode: 0755
+      owner: tomcat9
+      group: tomcat9
+
+  - name: Download Artifact from Artifactory
+    become: yes
+    get_url:
+      url: http://3.12.104.232:8082/artifactory/JackPiro/com/mkyong/JackPiro/1.2.33-SNAPSHOT/JackPiro-1.2.33-SNAPSHOT.war
+      url_password: Admin123
+      url_username: admin
+      dest: /opt/Downloads/JackPiro.war     // "/opt/Downloads/{{ artifact_name }}"
+      mode: 0755
+      group: tomcat9
+      owner: tomcat9
+      
+  - name: Copy File to webapp folder
+    become: yes
+    copy:
+      src: /opt/Downloads/JackPiro.war
+      dest: /var/lib/tomcat9/webapps
+      remote_src: yes
+      mode: 0755
+      owner: tomcat9
+      group: tomcat9
+      
+  - name: Delete a Directory /opt/Downloads
+    become: yes
+    file:
+      path: /opt/Downloads
+      state: absent
