@@ -17,7 +17,7 @@
       url: http://3.144.226.218:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.8-SNAPSHOT/JackPiro-1.2.8-20250107.062017-1.war
       url_password: Admin123
       url_username: admin
-      dest: /opt/Downloads/JackPiro.war     // "/opt/Downloads/{{ artifact_name }}"
+      dest: /opt/Downloads/JackPiro.war
       mode: 0755
       group: tomcat9
       owner: tomcat9
