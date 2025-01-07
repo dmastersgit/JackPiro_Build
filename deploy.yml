@@ -14,7 +14,7 @@
   - name: Download Artifact from Artifactory
     become: yes
     get_url:
-      url: http://3.12.104.232:8082/artifactory/JackPiro/com/mkyong/JackPiro/1.2.33-SNAPSHOT/JackPiro-1.2.33-SNAPSHOT.war
+      url: http://3.144.226.218:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.8-SNAPSHOT/JackPiro-1.2.8-20250107.062017-1.war
       url_password: Admin123
       url_username: admin
       dest: /opt/Downloads/JackPiro.war     // "/opt/Downloads/{{ artifact_name }}"
