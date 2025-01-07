@@ -1,44 +1,39 @@
 ---
-- name: Deploy artifact to Tomcat server
-  hosts: tomcat_servers
-  become: true
-  vars:
-    download_path: /home/{{ ansible_user }}/Downloads
-    artifact_url: "http://3.144.226.218:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.8-SNAPSHOT/JackPiro-1.2.8-20250107.062017-1.war"
-    tomcat_webapps_path: /var/lib/tomcat9/webapps
+- name: Playbook to Download and Deploy Artifact in tomcat
+  hosts: "{{ deploy_host }}"    
   tasks:
+  - name: Create a Directory /opt/Downloads
+    become: yes
+    file:
+      path: /opt/Downloads
+      state: directory
+      mode: 0755
+      owner: tomcat9
+      group: tomcat9
 
-    - name: Ensure Downloads directory exists
-      ansible.builtin.file:
-        path: "{{ download_path }}"
-        state: directory
-        mode: '0755'
-
-    - name: Download artifact from JFrog Artifactory
-      ansible.builtin.get_url:
-        url: "{{ artifact_url }}"
-        dest: "{{ download_path }}/JackPiro.war"
-        mode: '0644'
-
-    - name: Copy artifact to Tomcat webapps directory
-      ansible.builtin.copy:
-        src: "{{ download_path }}/example.war"
-        dest: "{{ tomcat_webapps_path }}/JackPiro.war"
-        remote_src: yes
-
-    - name: Ensure proper permissions for the artifact in webapps
-      ansible.builtin.file:
-        path: "{{ tomcat_webapps_path }}/JackPiro.war"
-        owner: tomcat
-        group: tomcat
-        mode: '0644'
-
-    - name: Restart Tomcat service
-      ansible.builtin.service:
-        name: tomcat9
-        state: restarted
-
-    - name: Remove Downloads directory
-      ansible.builtin.file:
-        path: "{{ download_path }}"
-        state: absent
+  - name: Download Artifact from Artifactory
+    become: yes
+    get_url:
+      url: http://3.144.226.218:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.8-SNAPSHOT/JackPiro-1.2.8-20250107.062017-1.war
+      url_password: Admin123
+      url_username: admin
+      dest: /opt/Downloads/JackPiro.war
+      mode: 0755
+      group: tomcat9
+      owner: tomcat9
+      
+  - name: Copy File to webapp folder
+    become: yes
+    copy:
+      src: /opt/Downloads/JackPiro.war
+      dest: /var/lib/tomcat9/webapps
+      remote_src: yes
+      mode: 0755
+      owner: tomcat9
+      group: tomcat9
+      
+  - name: Delete a Directory /opt/Downloads
+    become: yes
+    file:
+      path: /opt/Downloads
+      state: absent
