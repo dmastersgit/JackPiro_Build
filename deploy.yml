@@ -37,7 +37,7 @@
 
     - name: Restart Tomcat service
       ansible.builtin.service:
-        name: tomcat
+        name: tomcat9
         state: restarted
 
     - name: Remove Downloads directory
