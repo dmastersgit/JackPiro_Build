@@ -4,7 +4,7 @@
   become: true
   vars:
     download_path: /home/{{ ansible_user }}/Downloads
-    artifact_url: http://3.138.197.249:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.18-SNAPSHOT/JackPiro-1.2.18-20250108.044942-1.war
+    artifact_url: http://3.138.197.249:8082/artifactory/jackpiro-snapshot-repo-local/com/mkyong/JackPiro/1.2.12-SNAPSHOT/JackPiro-1.2.12-20250107.062734-1.war
     tomcat_webapps_path: /var/lib/tomcat9/webapps
   tasks:
 
