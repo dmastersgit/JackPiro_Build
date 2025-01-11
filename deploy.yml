@@ -7,7 +7,7 @@
         name: tomcat9
         state: present
 
-    - name: Create tomcat9 user
+  - name: Create tomcat9 user
       ansible.builtin.user:
         name: tomcat9
         group: tomcat9
@@ -15,7 +15,7 @@
         shell: /bin/false
         state: present
 
-    - name: Set ownership of tomcat directory
+  - name: Set ownership of tomcat directory
       ansible.builtin.file:
         path: /path/to/tomcat
         state: directory
