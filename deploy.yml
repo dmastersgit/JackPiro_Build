@@ -31,8 +31,8 @@
     - name: Ensure proper permissions for the artifact in webapps
       ansible.builtin.file:
         path: "{{ tomcat_webapps_path }}/JackPiro.war"
-        owner: tomcat
-        group: tomcat
+        owner: tomcat9
+        group: tomcat9
         mode: '0644'
 
     - name: Restart Tomcat service
