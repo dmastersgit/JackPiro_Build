@@ -2,6 +2,27 @@
 - name: Playbook to Download and Deploy Artifact in tomcat
   hosts: "{{ deploy_host }}"    
   tasks:
+  - name: Create tomcat9 group
+      ansible.builtin.group:
+        name: tomcat9
+        state: present
+
+    - name: Create tomcat9 user
+      ansible.builtin.user:
+        name: tomcat9
+        group: tomcat9
+        home: /opt/tomcat
+        shell: /bin/false
+        state: present
+
+    - name: Set ownership of tomcat directory
+      ansible.builtin.file:
+        path: /path/to/tomcat
+        state: directory
+        owner: tomcat9
+        group: tomcat9
+        mode: '0755'
+  
   - name: Create a Directory /opt/Downloads
     become: yes
     file:
