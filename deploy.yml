@@ -19,6 +19,7 @@
         url: "{{ artifact_url }}"
         dest: "{{ download_path }}/JackPiro.war"
         mode: '0644'
+        validate_certs: no
 
     - name: Copy artifact to Tomcat webapps directory
       ansible.builtin.copy:
