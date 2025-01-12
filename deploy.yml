@@ -17,8 +17,6 @@
     - name: Download artifact from JFrog Artifactory
       ansible.builtin.get_url:
         url: "{{ artifact_url }}"
-        url_password: Admin123
-        url_username: admin
         dest: "{{ download_path }}/JackPiro.war"
         mode: '0644'
 
